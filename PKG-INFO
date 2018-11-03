@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: pydhs
+Version: 1.6.5
+Summary: Python wrapper of C++ Hyperpath algorithm implementation, requires python-dev, boost_python installed
+Home-page: UNKNOWN
+Author: Jiangshan(Tonny) Ma
+Author-email: tonny.achilles@gmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: hyperpath
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.6
