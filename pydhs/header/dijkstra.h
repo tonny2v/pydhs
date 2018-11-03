@@ -14,41 +14,41 @@
 #include "algorithm.h"
 #include "graph.h"
 #include "radixheap.h"
-#include <boost/python.hpp>
+#include <boost/python/numpy.hpp>
 namespace bp = boost::python;
 class Dijkstra :
-    public Algorithm
+public Algorithm
 {
-    private:
+private:
+    
+    Graph* g;
+    
+    float* u;
+    
+    int* pre_idx;
+    
+    bool* open;
+    
+    bool* close;
+    
+    float* weights;
+    
+public:
+    
+    // or const & here: passing by reference or passing a pointer
+    Dijkstra(Graph* const _g);
+    
+    ~Dijkstra();
 
-        Graph* g;
+    void set_weights(const bp::object& _weight); 
 
-        float* u;
+    void recover(); 
 
-        int* pre_idx;
+    void run(string _oid);
+    
+    bp::list get_potentials();
 
-        bool* open;
-
-        bool* close;
-
-        float* weights;
-
-    public:
-
-        // or const & here: passing by reference or passing a pointer
-        Dijkstra(Graph* const _g);
-
-        ~Dijkstra();
-
-        void set_weights(const bp::object& _weight);
-
-        void recover();
-
-        void run(string _oid);
-
-        bp::list get_potentials();
-
-        bp::list get_path(string _oid, string _did);
-
+    bp::list get_path(string _oid, string _did);
+    
 };
 #endif /* DIJKSTRA_H_ */

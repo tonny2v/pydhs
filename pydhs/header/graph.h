@@ -113,7 +113,7 @@ public:
         size_t n = get_vertex_number();
         //    Graph* gr = new Graph(int(n), int(m));
         boost::shared_ptr<Graph> gr (boost::make_shared<Graph>(n, m));
-        for (int i = 0; i< m; ++i){
+        for (unsigned int i = 0; i< m; ++i){
             gr->add_edge(get_edge(i)->id, get_edge(i)->to_vertex->id,get_edge(i)->from_vertex->id);
         }
         return gr;
@@ -254,4 +254,5 @@ public:
         return n_cnt;
     }
 };
+
 #endif

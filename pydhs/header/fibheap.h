@@ -10,8 +10,6 @@
 /* Option to allow printing of debugging information.  Use 1 for yes, or 0 for
  * no.
  */
-#define FHEAP_DUMP 0
-
 
 /* --- FHeapNode ---
  * Fibonacci heap node class.

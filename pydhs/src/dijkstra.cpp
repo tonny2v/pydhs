@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <Python.h>
+#include <boost/python/numpy.hpp>
 #include <boost/python.hpp>
 #include <exception>
 using namespace std;
@@ -28,7 +29,7 @@ Dijkstra::Dijkstra(Graph* const _g)
     weights = new float[m]; //vertices with P labels
 
     
-    for (int i=0;i<n;++i){
+    for (unsigned int i=0;i<n;++i){
         u[i] = numeric_limits<float>::infinity();
         pre_idx[i] = -1;
         open[i] = false;
@@ -52,14 +53,14 @@ Dijkstra::~Dijkstra(){
 
 void Dijkstra::set_weights(const bp::object& _weight){
     size_t m = g->get_edge_number();
-    for (int i=0;i<m;++i){
+    for (unsigned int i=0;i<m;++i){
         weights[i] = bp::extract<float>(_weight[i]);
     }
 }
 
 void Dijkstra::recover(){
     size_t n = g->get_vertex_number();
-    for (int i=0;i<n;++i){
+    for (unsigned int i=0;i<n;++i){
         u[i] = numeric_limits<float>::infinity();
         pre_idx[i] = -1;
         open[i] = false;
@@ -70,7 +71,7 @@ void Dijkstra::recover(){
 bp::list Dijkstra::get_potentials(){
     bp::list potentials;
     size_t n = g->get_vertex_number();
-    for (int i=0; i<n; ++i) {
+    for (unsigned int i=0; i<n; ++i) {
         potentials.append(u[i]); 
     }
     return potentials;
@@ -124,8 +125,6 @@ void Dijkstra::run(string _oid){
     delete heap;
     heap = nullptr;
 }
-
-
 
 bp::list Dijkstra::get_path(string _oid, string _did) {
     bp::list path;

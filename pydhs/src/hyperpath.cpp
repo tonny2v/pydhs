@@ -34,14 +34,14 @@ Hyperpath::Hyperpath(Graph * const _g) {
     wmin = new float[m];
     wmax = new float[m];
 
-    for (int i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         u_i[i] = numeric_limits<float>::infinity();
         f_i[i] = 0.0;
         p_i[i] = 0.0;
         h[i] = 0.0;
     }
 
-    for (int i = 0; i < m; ++i) {
+    for (unsigned int i = 0; i < m; ++i) {
         u_a[i] = numeric_limits<float>::infinity();
         p_a[i] = 0.0;
         open[i] = false;
@@ -78,7 +78,7 @@ Hyperpath::~Hyperpath() {
 
 void Hyperpath::set_weights(const bp::object &_wmin, const bp::object &_wmax){
     size_t m = g->get_edge_number();
-    for (int i=0; i<m; i++){
+    for (unsigned int i=0; i<m; i++){
         wmin[i] = bp::extract<float>(_wmin[i]);
         wmax[i] = bp::extract<float>(_wmax[i]);
     }
@@ -87,7 +87,7 @@ void Hyperpath::set_weights(const bp::object &_wmin, const bp::object &_wmax){
 
 void Hyperpath::set_potentials(const bp::object &_h){
     size_t n = g->get_vertex_number();
-    for (int i=0; i<n; i++){
+    for (unsigned int i=0; i<n; i++){
         h[i] = bp::extract<float>(_h[i]);
     }
 }
@@ -213,13 +213,13 @@ void Hyperpath::recover(){
     size_t n = g->get_vertex_number();
     size_t m = g->get_edge_number();
 
-    for (int i = 0; i < n; ++i) {
+    for (unsigned int i = 0; i < n; ++i) {
         u_i[i] = numeric_limits<float>::infinity();
         f_i[i] = 0.0;
         p_i[i] = 0.0;
     }
 
-    for (int i = 0; i < m; ++i) {
+    for (unsigned int i = 0; i < m; ++i) {
         u_a[i] = numeric_limits<float>::infinity();
         p_a[i] = 0.0;
         open[i] = false;

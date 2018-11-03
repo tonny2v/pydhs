@@ -36,8 +36,12 @@ alg = pydhs.Ma2013(g)
 # use no node potentials here
 h = np.zeros(m)
 
+# set weights and node potentials
+alg.set_weights(w_min, w_max)
+alg.set_potentials(h)
+
 # search hyperpath from node 1 to 37
-alg.run('1','37', w_min, w_max, h)
+alg.run('1','37')
 
 # hyperpath results in terms of link ID and choice possibility
 print '------------------------------------'

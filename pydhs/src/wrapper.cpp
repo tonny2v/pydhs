@@ -19,7 +19,6 @@
 
 using namespace boost::python;
 namespace bp = boost::python;
-namespace np = boost::python::numpy;
 using namespace std;
 
 // ------------ pickle settings ----------------------
@@ -28,7 +27,7 @@ struct graph_pickle_suite : boost::python::pickle_suite
 {
     static boost::python::tuple
     getinitargs(Graph const& g) { return boost::python::make_tuple(g.get_vertex_number(), g.get_edge_number()); }
-    
+
     static boost::python::tuple
     getstate(boost::python::object g_obj){
         Graph const &g = boost::python::extract<Graph const&>(g_obj);
@@ -53,7 +52,7 @@ struct graph_pickle_suite : boost::python::pickle_suite
         boost::python::tuple edges;
         // serialize as edges
         boost::python::list l;
-        for (int i = 0; i < g.get_edge_number(); ++i) {
+        for (unsigned int i = 0; i < g.get_edge_number(); ++i) {
             l.append(g.get_edge(i)->id);
             l.append(g.get_edge(i)->from_vertex->id);
             l.append(g.get_edge(i)->to_vertex->id);
@@ -63,7 +62,7 @@ struct graph_pickle_suite : boost::python::pickle_suite
     }
     static void
     setstate(Graph &g, boost::python::tuple state) {
-        for(int i = 0; i< g.get_edge_number(); ++i)
+        for(unsigned int i = 0; i< g.get_edge_number(); ++i)
         {
             string eid = boost::python::extract<string>(state[i][0]);
             string fid = boost::python::extract<string>(state[i][1]);
@@ -92,7 +91,7 @@ void translate_graphnotset(const GraphException::GraphNotSet & e)
 const bp::list describe(const bp::object &array) {
     size_t m = bp::len(array);
     std::set<string> vertices_set;
-    for (int i = 0; i < m; ++i) {
+    for (unsigned int i = 0; i < m; ++i) {
         string fid = extract<string>(array[i][1]);
         string tid = extract<string>(array[i][2]);
         vertices_set.insert(fid);
@@ -119,21 +118,20 @@ const boost::shared_ptr<Graph> make_graph(const bp::object& array, int n, int m)
 
 BOOST_PYTHON_MODULE(dhs)
 {
-    //    np::initialize();
     // disable C++ auto docstring, keep user-defined docstring and C++ signature
     //docstring_options local_docstring_options(true, true, false);
-    
+
     // keep user-defined docstring only
     docstring_options local_docstring_options(true, false, false);
 
     // Register exceptions
     register_exception_translator<GraphException::NotAccessible>(&translate_notaccessible);
     register_exception_translator<GraphException::GraphNotSet>(&translate_graphnotset);
-    
+
     /// ************************************************************************
     ///                                 Vertex
     /// ************************************************************************
-    class_<Vertex> pyVertex("Vertex", "Vertex type\n", init<string>(args("id"), 
+    class_<Vertex> pyVertex("Vertex", "Vertex type\n", init<string>(args("id"),
                 "Create a Vertex with an id string\n"));
     pyVertex.def_readwrite("id", &Vertex::id, "Vertex id string\n");
     pyVertex.def_readonly("idx", &Vertex::idx, "Internal vertex index integer\n");
@@ -145,18 +143,18 @@ BOOST_PYTHON_MODULE(dhs)
     /// ************************************************************************
     ///                                 Edge
     /// ************************************************************************
-    class_<Edge> pyEdge("Edge","Edge type\n", init<string, Vertex*, Vertex*>(args("id","fv","tv"), 
+    class_<Edge> pyEdge("Edge","Edge type\n", init<string, Vertex*, Vertex*>(args("id","fv","tv"),
                 "Create an edge from two vertices\n"));
     pyEdge.def_readwrite("id", &Edge::id, "Edge id string\n");
     pyEdge.def_readonly("idx", &Edge::idx, "Internal edge index integer\n");
-    
+
     // python won't delete the pointer if using reference_existing_object policy
     // on the contrary, if using manage_new_object, the pointer deletion will be python's duty.
     pyEdge.def("get_fv", &Edge::get_fv,
                return_value_policy<reference_existing_object>(), "from/tail vertex\n");
     pyEdge.def("get_tv", &Edge::get_tv,
                return_value_policy<reference_existing_object>(), "to/head vertex\n");
-    
+
     /// ************************************************************************
     ///                                 Graph
     /// ************************************************************************
@@ -177,7 +175,7 @@ BOOST_PYTHON_MODULE(dhs)
     Edge* (Graph::*get_edge_byidx)(int idx) const= &Graph::get_edge;
 
     // shared_ptr should be added to the class declaration
-    class_<Graph, boost::shared_ptr<Graph> >("Graph", "Graph type\n", init<int, int>(args("n","m"), 
+    class_<Graph, boost::shared_ptr<Graph> >("Graph", "Graph type\n", init<int, int>(args("n","m"),
             "Graph(n,m)\n\n"
             "Create a graph contains maximum n vertices and m edges\n\n"
             "Parameters\n"
@@ -210,7 +208,7 @@ BOOST_PYTHON_MODULE(dhs)
             ">>>fv = g.get_vertex('v1')\n"
             ">>>tv = g.get_vertex('v2')\n"
             ">>>g.add_edge('e1',fv,tv)\n")
-        .def("add_edge", add_edge_s, 
+        .def("add_edge", add_edge_s,
             "add_edge(name, fv_name, tv_name)\n\n"
             "Add an edge by vertex strings\n\n"
             "Parameters\n"
@@ -231,12 +229,12 @@ BOOST_PYTHON_MODULE(dhs)
         .def("reverse", &Graph::make_reverse)
         .def("get_edge", get_edge_byid, return_value_policy<reference_existing_object>())
         .def("get_edge", get_edge_byidx, return_value_policy<reference_existing_object>());
-    
+
     // Graph from array
-    //boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
+//    boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
     //	def("make_graph", make_graph, return_value_policy<manage_new_object>());
     //no need to use manage_new_object since shared_ptr is used
-    def("make_graph", make_graph, 
+    def("make_graph", make_graph,
             "make_graph(arr, n, m)\n\n"
             "Make a graph from edge array\n\n"
             "Parameters\n"
@@ -272,15 +270,15 @@ BOOST_PYTHON_MODULE(dhs)
             ">>>arr = [['e1','v1','v2'],['e2','v2','v3']]\n"
             ">>>describe(arr)\n"
             "[3, 2]\n");
-    
+
     /// ************************************************************************
     ///                Dijkstra for node potential generation
     /// ************************************************************************
-    class_<Dijkstra> pyDijkstra("Dijkstra", 
+    class_<Dijkstra> pyDijkstra("Dijkstra",
             init<Graph*>(args("g"),"Dijkstra(g)\n\n"
-                ">>>alg = Dijkstra(g)\n")); 
+                ">>>alg = Dijkstra(g)\n"));
 
-    pyDijkstra.def("run", &Dijkstra::run, 
+    pyDijkstra.def("run", &Dijkstra::run,
         ">>>alg.run('oid', h)\n"
         );
 
@@ -299,13 +297,13 @@ BOOST_PYTHON_MODULE(dhs)
     pyDijkstra.def("recover", &Dijkstra::recover,
         ">>>alg.recover()\n"
         );
-   
+
     /// ************************************************************************
     ///                                 Hyperpath
     /// ************************************************************************
-    class_<Hyperpath> pyHyperpath("Ma2013", 
+    class_<Hyperpath> pyHyperpath("Ma2013",
             "Dijkstra-Hyperstar algorithm in Ma, J., Fukuda, D. and Schmoecker, J.D. 2013\n"
-            "Faster hyperpath generating algorithms for vehicle navigation\n" 
+            "Faster hyperpath generating algorithms for vehicle navigation\n"
             "Transportmetrica A: Transport Science, Vol. 9, 925 – 948.\n"
             "http://www.tandfonline.com/doi/abs/10.1080/18128602.2012.719165\n",
             init<Graph*>(args("g"),"Ma2013(g)\n\n"
@@ -320,23 +318,19 @@ BOOST_PYTHON_MODULE(dhs)
                 "----------\n"
                 ">>>g = Graph(2,1)\n"
                 ">>>g.add_edge('e1','v1','v2')\n"
-                ">>>alg = ma2013(g)\n")); 
+                ">>>alg = ma2013(g)\n"));
 
     pyHyperpath.def("set_weights", &Hyperpath::set_weights);
 
     pyHyperpath.def("set_potentials", &Hyperpath::set_potentials);
 
-    pyHyperpath.def("run", &Hyperpath::run, 
-        "run(fv, tv, w_min, w_max, h)\n\n"
+    pyHyperpath.def("run", &Hyperpath::run,
+        "run(fv, tv)\n\n"
         "Run algorithm to calculate the exact hyperpath \n\n"
         "Parameters\n"
         "----------\n"
         "fv, tv : string\n"
         "   names of from vertex and to vertex\n"
-        "w_min, w_max : array-like\n"
-        "   minimum and maximum weights for all edges\n"
-        "h : array-like\n"
-        "   object to store hyperpath results:\n\n"
         "Returns\n"
         "----------\n"
         "None\n\n"
@@ -347,12 +341,14 @@ BOOST_PYTHON_MODULE(dhs)
         ">>>g.add_edge('e2','v2','v3')\n"
         ">>>alg = Ma2013(g)\n"
         ">>>w_min, w_max, h = [[1.2, 1.5], [0.2, 0.4], [0,0]]\n"
-        ">>>alg.run('v1','v3',w_min, w_max, h)\n"
+        ">>>alg.set_weights(w_min, w_max)\n"
+        ">>>alg.set_potentials(h)"
+        ">>>alg.run('v1','v3')\n"
         );
-    pyHyperpath.def_readonly("hyperpath", &Hyperpath::get_hyperpath, 
+    pyHyperpath.def_readonly("hyperpath", &Hyperpath::get_hyperpath,
             "Hyperpath result \n\n"
             "Note: the first element is edge index, the second element is choice possibility\n");
 
-    pyHyperpath.def("recover", &Hyperpath::recover, 
+    pyHyperpath.def("recover", &Hyperpath::recover,
             "recover() \n");
 }

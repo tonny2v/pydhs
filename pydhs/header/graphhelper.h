@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tonny.achilles. All rights reserved.
 //
 
-#ifndef GRPAHHELPER_H
-#define GRPAHHELPER_H
+#ifndef GRAPHHELPER_H
+#define GRAPHHELPER_H
 
 #include <boost/algorithm/string.hpp>
 #include <fstream>
@@ -21,6 +21,7 @@ void graph_matsim2csv(string _input, string _output)
 {
     ofstream fout(_output);
     // ------------------------------------ anaylze network.xml ---------------------------------------
+    cout << "read network.xml" << endl;
     property_tree::ptree *pt_network = new property_tree::ptree();
     property_tree::xml_parser::read_xml(_input, *pt_network);
     auto links = pt_network->get_child("network.links");

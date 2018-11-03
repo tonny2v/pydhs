@@ -2,12 +2,8 @@
  * ----------------------------------------------------------------------------
  *  Shane Saunders
  */
-#define FHEAP_DUMP 1
 #include <cstdlib>
 #include <cmath>
-#if FHEAP_DUMP
-#include <cstdio>
-#endif
 #include "fibheap.h"
 
 /*--- FHeap (public methods) ------------------------------------------------*/

@@ -7,7 +7,6 @@
 
 #ifndef ALGORITHM_H
 #define ALGORITHM_H
-//#include <time.h>
 #include <sys/timeb.h>
 
 class Algorithm {
@@ -26,4 +25,4 @@ public:
     int get_elapesd_ms() const;
 };
 
-#endif /* ALGORITHM_H */
+#endif /* ALGORITHM_H_ */
