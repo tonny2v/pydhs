@@ -8,9 +8,14 @@ Note
 
 Install
 ----
-require boost-python and python-dev installed
+You may find the package in Pypi repository and install via pip install pydhs, however, only python2.7 under Mac OS X have been tested. You have to revise the install scripts "setup.py" according to your own OS environment.
 
-`pip install pydhs`
+docker pull tonny2v/pydhs
+
+Test run
+----
+docker run -it tonny2v/pydhs python -c "import pydhs;import numpy as np;arr = np.array(pydhs.sample.get_bell2009());sarr =arr[:,:3].astype('int').astype('str');w_min, w_max = arr[:,-2], arr[:,-1];n, m = pydhs.describe(sarr);g = pydhs.make_graph(sarr, n, m);alg = pydhs.Ma2013(g);h = np.zeros(m);alg.set_weights(w_min, w_max);alg.set_potentials(h);alg.run('1','37');print(alg.hyperpath);"
+
 Tutorial
 ----
 ```
