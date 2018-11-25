@@ -2,9 +2,37 @@
 Note
 ----
 - This package is created by Jiangshan(Tonny) Ma in his Ph.D. work in Tokyo Institute of Technology
-- In some Linux distributions such as Redhat, Fedora or Centos, you may see the 
- "error: g++ error:/usr/lib/rpm/redhat/redhat-hardened-cc1 No that file and directory", in that case, "sudo dnf install redhat-rpm-config" will solve the problem
-- If your OS is Centos, you need to add epel source first by "sudo yum -y install epel-release"
+- If it happens to be useful to you, please cite my work [Faster hyperpath generating algorithms for vehicle navigation](https://www.tandfonline.com/doi/abs/10.1080/18128602.2012.719165) or my ISTTT paper [A Hyperpath-based Network Generalized Extreme-value Model for Route Choice under Uncertainties](https://www.sciencedirect.com/science/article/pii/S235214651500071X)
+
+
+```latex
+@article{doi:10.1080/18128602.2012.719165,
+author = {Jiangshan Ma and Daisuke Fukuda and Jan-Dirk SchmÃ¶cker},
+title = {Faster hyperpath generating algorithms for vehicle navigation},
+journal = {Transportmetrica A: Transport Science},
+volume = {9},
+number = {10},
+pages = {925-948},
+year  = {2013},
+publisher = {Taylor & Francis},
+doi = {10.1080/18128602.2012.719165},
+
+URL = { 
+        https://doi.org/10.1080/18128602.2012.719165
+    
+},
+eprint = { 
+        https://doi.org/10.1080/18128602.2012.719165
+    
+}
+
+}
+
+```
+
+
+
+
 
 Install
 ----
