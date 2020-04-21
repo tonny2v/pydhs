@@ -43,6 +43,9 @@ struct Vertex {
     }
     ~Vertex() {
     }
+    string to_string(){
+        return "v" + this->id;
+    }
     string id;
     int idx;
     vector<Edge*> in_edges;
@@ -52,14 +55,21 @@ struct Vertex {
 };
 
 struct Edge {
+
     Edge(const string &_id, Vertex* _fv, Vertex* _tv) {
         id = _id;
         idx = 0;
         from_vertex = _fv;
         to_vertex = _tv;
     }
+
     ~Edge() {
     }
+
+    string to_string(){
+        return "e" + this->id;
+    }
+
     string id;
     int idx;
     Vertex* from_vertex;
@@ -69,7 +79,7 @@ struct Edge {
     void set_fv(Vertex * _fv) {
         from_vertex = _fv;
     }
-    
+
     Vertex* to_vertex;
     Vertex* get_tv() {
         return to_vertex;
@@ -96,7 +106,8 @@ public:
         vertices = new Vertex*[n];
         edges = new Edge*[m];
     }
-    
+
+
     ~Graph() {
         for (int i = 0; i < n_cnt; ++i)
             delete vertices[i];
@@ -107,7 +118,10 @@ public:
         delete[] edges;
         edges = nullptr;
     }
-    
+
+    string to_string(){
+        return "graph with " + std::to_string(this->n_cnt) + " vertices and " + std::to_string(this->m_cnt) + " edges";
+    }
     const boost::shared_ptr<Graph> make_reverse(){
         size_t m = get_edge_number();
         size_t n = get_vertex_number();
@@ -118,31 +132,28 @@ public:
         }
         return gr;
     }
-    
+
     inline Vertex** get_vertices() {
         return vertices;
     }
-    
+
     inline Edge** get_edges() {
         return edges;
     }
-    
-    
-    
+
     int get_vidx(const string &_vid) {
         if (vid_to_idx.find(_vid) == vid_to_idx.end())
             throw "ERROR: vertex not exist: " + _vid;
         return vid_to_idx[_vid];
     }
-    
+
     int get_eidx(const string &_eid) {
         if (eid_to_idx.find(_eid) == vid_to_idx.end())
             throw "ERROR: edge not exist: " + _eid;
         return eid_to_idx[_eid];
     }
-    
+
     // build graph methods
-    
     void add_vertex(const string &_id) {
         if (vertex_ids.find(_id) == vertex_ids.end()) // do insertion only when the vertex hasn't been inserted
         {
@@ -154,7 +165,7 @@ public:
             n_cnt++;
         }
     }
-    
+
     void add_edge(const string &_id, Vertex* _fv, Vertex* _tv) {
         if (edge_ids.find(_id) == edge_ids.end()) // do insertion only when the edge hasn't been inserted
         {
@@ -172,7 +183,7 @@ public:
             m_cnt++;
         }
     }
-    
+
     void add_edge(const string &_id, const string &_fv_id, const string &_tv_id) {
         if (edge_ids.find(_id) == edge_ids.end()) // do insertion only when the edge hasn't been inserted
         {
@@ -182,13 +193,13 @@ public:
             auto fv = get_vertex(_fv_id);
             auto tv = get_vertex(_tv_id);
             Edge* e = new Edge(_id, fv, tv);
-            
+
             edges[m_cnt] = e;
-            
+
             //        _fv->out_edges[_fv->out_cnt] = e;
             fv->out_edges.push_back(e);
             fv->out_cnt++;
-            
+
             //		_tv->in_edges[_tv->in_cnt] = e;
             tv->in_edges.push_back(e); //has to be used together to ensure efficiency
             tv->in_cnt++;
@@ -197,17 +208,17 @@ public:
             m_cnt++;
         }
     }
-    
+
     // get vertex methods
     inline Vertex* get_vertex (const string &_id) const{
         int idx = vid_to_idx.at(_id);
         return vertices[idx];
     }
-    
+
     inline Vertex* get_vertex(int _idx) const{
         return vertices[_idx];
     }
-    
+
     // get the common vertex of two edges
     Vertex* get_vertex(Edge* _e1, Edge* _e2) const{
         auto e1_fv = _e1->from_vertex;
@@ -221,13 +232,13 @@ public:
         else
             return nullptr;
     }
-    
+
     // get edge methods
     inline Edge* get_edge(string _id) const{
         int idx = eid_to_idx.at(_id);
         return edges[idx];
     }
-    
+
     inline Edge* get_edge(Vertex* _fv, Vertex* _tv) const{
         for (const auto& e1 : _fv->out_edges)
         {
@@ -237,15 +248,15 @@ public:
         }
         return nullptr;
     }
-    
+
     inline Edge* get_edge(string _fid, string _tid) const{
         return get_edge(get_vertex(_fid), get_vertex(_tid));
     }
-    
+
     inline Edge* get_edge (int _idx) const{
         return edges[_idx];
     }
-    
+
     // graph infomation methods
     inline size_t get_edge_number() const {
         return m_cnt;

@@ -139,6 +139,7 @@ BOOST_PYTHON_MODULE(dhs)
     pyVertex.def_readonly("out_cnt", &Vertex::out_cnt, "Number of outgoing edges\n");
     pyVertex.def_readwrite("in_edges", &Vertex::in_edges, "List of incoming edges\n");
     pyVertex.def_readwrite("out_edges", &Vertex::out_edges, "List of outgoing edges\n");
+    pyVertex.def("__repr__", &Vertex::to_string);
 
     /// ************************************************************************
     ///                                 Edge
@@ -155,6 +156,7 @@ BOOST_PYTHON_MODULE(dhs)
     pyEdge.def("get_tv", &Edge::get_tv,
                return_value_policy<reference_existing_object>(), "to/head vertex\n");
 
+    pyEdge.def("__repr__", &Edge::to_string);
     /// ************************************************************************
     ///                                 Graph
     /// ************************************************************************
@@ -228,7 +230,8 @@ BOOST_PYTHON_MODULE(dhs)
         .def("get_vertex", get_vertex_byidx, return_value_policy<reference_existing_object>())
         .def("reverse", &Graph::make_reverse)
         .def("get_edge", get_edge_byid, return_value_policy<reference_existing_object>())
-        .def("get_edge", get_edge_byidx, return_value_policy<reference_existing_object>());
+        .def("get_edge", get_edge_byidx, return_value_policy<reference_existing_object>())
+        .def("__repr__", &Graph::to_string);
 
     // Graph from array
 //    boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
