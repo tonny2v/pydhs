@@ -25,4 +25,4 @@ RUN rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
 COPY . /work
 WORKDIR /work
 
-RUN CFLAGS="-isystem /usr/include/c++/6.4.0" python3 setup.py build && python3 setup.py install
+RUN python3 setup.py build && python3 setup.py install
