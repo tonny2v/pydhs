@@ -1,6 +1,6 @@
 FROM alpine:latest
-
-RUN apk add boost-python boost-dev musl-dev g++
+RUN apk upgrade
+RUN apk add boost-python3 boost-dev musl-dev g++
 
 ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/include/python3.6m:/usr/local/include'
 
