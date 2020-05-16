@@ -6,6 +6,8 @@ ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/include/python3.8:/usr/local/include'
 
 ENV LD_LIBRARY_PATH '/usr/lib:/usr/local/lib:/usr/local/lib64'
 
+RUN apk add musl-dev
+
 RUN apk add git py3-pip py3-numpy py3-numpy-dev python3-dev cmake make
 
 RUN rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
