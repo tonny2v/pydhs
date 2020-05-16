@@ -2,13 +2,13 @@ FROM alpine:latest
 RUN apk upgrade
 RUN apk add boost-python3 boost-dev musl-dev g++
 
-ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/include/python3.6m:/usr/local/include'
+ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/include/python3.8:/usr/local/include'
 
 ENV LD_LIBRARY_PATH '/usr/lib:/usr/local/lib:/usr/local/lib64'
 
-RUN apk add git py3-pip py3-numpy py-numpy-dev python3-dev cmake make
+RUN apk add git py3-pip py3-numpy py3-numpy-dev python3-dev cmake make
 
-RUN rm /usr/bin/python && ln -s /usr/bin/python3.6 /usr/bin/python
+RUN rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
 
 # it has been deceprated and integrated into boost
 #RUN mkdir /work && \
