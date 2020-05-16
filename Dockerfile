@@ -27,4 +27,4 @@ RUN rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
 COPY . /work
 WORKDIR /work
 
-RUN python3 setup.py build && python3 setup.py install
+RUN CFLAGS="-isystem /usr/include/c++/9.2.0" python3 setup.py build && python3 setup.py install
