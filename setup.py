@@ -11,7 +11,7 @@ if os.environ.get('LD_LIBRARY_PATH'):
 
 config['include_path'] = config.get('include_path') + ['pydhs/header', ]
 
-libraries = ['python3.8', 'boost_python3']
+libraries = ['python3.8', 'boost_python3.8']
 
 classifiers = [
     'Development Status :: 3 - Alpha',
