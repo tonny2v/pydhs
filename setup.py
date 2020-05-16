@@ -11,7 +11,7 @@ if os.environ.get('LD_LIBRARY_PATH'):
 
 config['include_path'] = config.get('include_path') + ['pydhs/header', ]
 
-libraries = ['python3.6m', 'boost_python3']
+libraries = ['python3.8', 'boost_python3']
 
 classifiers = [
     'Development Status :: 3 - Alpha',
@@ -21,7 +21,7 @@ classifiers = [
 
     'License :: OSI Approved :: MIT License',
 
-    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.8',
 ]
 
 dhs = Extension('dhs',
@@ -35,7 +35,7 @@ dhs = Extension('dhs',
 setup(name='pydhs',
       classifiers=classifiers,
       license='MIT',
-      version='1.6.6',
+      version='1.6.7',
       description='Python wrapper of C++ Hyperpath algorithm implementation',
       keywords='hyperpath',
       author='Jiangshan(Tonny) Ma',
