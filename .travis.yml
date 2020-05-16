@@ -1,0 +1,5 @@
+language: python
+
+script: python setup.py build
+
+install: docker built . -t tonny2v/pydhs
