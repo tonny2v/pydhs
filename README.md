@@ -77,14 +77,14 @@ alg.set_potentials(h)
 alg.run('1','37')
 
 # hyperpath results in terms of link ID and choice possibility
-print '------------------------------------'
-print 'eid\tvid pair\tpossibility'
-print '------------------------------------'
+print('------------------------------------')
+print('eid\tvid pair\tpossibility')
+print('------------------------------------')
 for i in alg.hyperpath:
     edge = g.get_edge(i[0])
     eid, p = i
-    print eid, '\t', edge.get_fv().id,'-->', edge.get_tv().id, '\t', round(p, 2)
-print '------------------------------------'
+    print(eid, '\t', edge.get_fv().id,'-->', edge.get_tv().id, '\t', round(p, 2))
+print('------------------------------------')
 ```
 
 Contact

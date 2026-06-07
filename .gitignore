@@ -1,1 +1,13 @@
 .idea/
+__pycache__/
+*.o
+*.so
+build/
+dist/
+*.egg-info/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+rust_impl/target/
+.omc/

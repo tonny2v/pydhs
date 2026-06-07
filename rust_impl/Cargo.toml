@@ -1,0 +1,11 @@
+[package]
+name = "rust_impl"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "dhs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "0.24", features = ["extension-module"] }

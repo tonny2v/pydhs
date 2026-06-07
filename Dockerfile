@@ -2,9 +2,10 @@ FROM alpine:latest
 RUN apk upgrade
 RUN apk add boost-python3 boost-dev musl-dev g++
 
-ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/include/python3.8:/usr/local/include'
+ENV CPLUS_INCLUDE_PATH '/usr/include:/usr/local/include'
 
 ENV LD_LIBRARY_PATH '/usr/lib:/usr/local/lib:/usr/local/lib64'
+ENV BOOST_PYTHON_LIB 'boost_python3'
 
 RUN apk add musl-dev
 
